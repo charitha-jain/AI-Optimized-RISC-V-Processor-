@@ -1,0 +1,9 @@
+module ai_test_vectors(
+    output reg [255:0] matrix_a,
+    output reg [255:0] matrix_b
+);
+    initial begin
+        matrix_a = 256'h0101010101010101010101010101010101010101010101010101010101010101;
+        matrix_b = 256'h0202020202020202020202020202020202020202020202020202020202020202;
+    end
+endmodule
