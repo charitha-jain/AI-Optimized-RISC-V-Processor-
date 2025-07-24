@@ -1,4 +1,7 @@
-*.vvp
 *.vcd
+*.vvp
 *.log
 __pycache__/
+*.hex
+*.out
+
