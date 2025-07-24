@@ -55,6 +55,6 @@ This project implements a pipelined RISC-V CPU with custom AI-specific instructi
 
 ## How to Run
 ```bash
-iverilog -o cpu_tb.vvp cpu_tb.v <other .v files>
-vvp cpu_tb.vvp
-gtkwave cpu_tb.vcd
+iverilog -o sim/cpu_tb.vvp src/*.v testbenches/cpu_tb.v
+vvp sim/cpu_tb.vvp
+gtkwave sim/cpu_tb.vcd
