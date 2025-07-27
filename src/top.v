@@ -75,9 +75,9 @@ module top (
 
     alu alu0(.input_a(read1_ex), .input_b(imm_ex), .alu_op(alu_op_ex), .alu_result(alu_out_ex));
     dot_product dot0(.vec_a(read1_ex[127:0]), .vec_b(read2_ex[127:0]), .dot_result(dot_ex));
-    relu_unit relu0(.in_data(read1_ex), .out_data(relu_ex));
-    sigmoid_unit sig0(.in_data(read1_ex), .out_data(sigmoid_ex));
-    step_function step0(.in_data(read1_ex), .out_data(step_ex));
+    relu_unit relu0(.in_data(read1_ex), .relu_result(relu_ex));
+    sigmoid_unit sig0(.in_data(read1_ex), .sigmoid_result(sigmoid_ex));
+    step_function step0(.in_data(read1_ex), .step_result(step_ex));
 
     matrix_multiplier mm0(
         .clk(clk), .start(ai_start),
