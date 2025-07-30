@@ -57,9 +57,9 @@ module top (
         .imm_in(imm_id), .alu_op_in(alu_op_id),
         .rs1_in(rs1_id), .rs2_in(rs2_id), .rd_in(rd_id),
         .regwrite_in(regwrite_id),
-        .is_ai_in(is_ai_id), .ai_opcode_in(ai_opcode_id),
+        .is_ai_in(is_ai_id), .ai_opcode_in(ai_opcode_id), .op_in(op_id),
 
-        .pc_out(pc_ex), .read_data1_out(read1_ex), .read_data2_out(read2_ex),
+        .op_out(op_ex), .pc_out(pc_ex), .read_data1_out(read1_ex), .read_data2_out(read2_ex),
         .imm_out(imm_ex), .alu_op_out(alu_op_ex),
         .rs1_out(rs1_ex), .rs2_out(rs2_ex), .rd_out(rd_ex),
         .regwrite_out(regwrite_ex),
