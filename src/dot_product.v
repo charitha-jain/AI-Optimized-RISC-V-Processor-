@@ -1,6 +1,6 @@
 module dot_product(
     input [127:0] vec_a, vec_b,
-    output reg [31:0] dot_result
+    output reg [127:0] dot_result
 );
     integer i;
     reg signed [63:0] acc;
@@ -12,7 +12,7 @@ module dot_product(
             b_lane = vec_b[32*i +: 32];
             acc = acc + (a_lane * b_lane);
         end
-        dot_result = acc[31:0];
+        dot_result = {96'b0, acc[31:0]};
     end
 endmodule
 

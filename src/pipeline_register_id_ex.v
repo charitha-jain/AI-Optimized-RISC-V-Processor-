@@ -1,14 +1,15 @@
 module pipeline_register_id_ex (
     input clk, reset,
-    input [31:0] pc_in, imm_in,
+    input [31:0] pc_in,
+    input [127:0] imm_in,
     input [127:0] read_data1_in, read_data2_in,
     input [3:0] alu_op_in,
     input [4:0] rs1_in, rs2_in, rd_in,
     input regwrite_in,
     input is_ai_in,
     input [2:0] ai_opcode_in,
-
-    output reg [31:0] pc_out, imm_out,
+    output reg [31:0] pc_out,
+    output reg [127:0] imm_out,
     output reg [127:0] read_data1_out, read_data2_out,
     output reg [3:0] alu_op_out,
     output reg [4:0] rs1_out, rs2_out, rd_out,
@@ -16,7 +17,6 @@ module pipeline_register_id_ex (
     output reg is_ai_out,
     output reg [2:0] ai_opcode_out
 );
-
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             pc_out <= 0; read_data1_out <= 0; read_data2_out <= 0;
@@ -37,6 +37,5 @@ module pipeline_register_id_ex (
             ai_opcode_out <= ai_opcode_in;
         end
     end
-
 endmodule
 

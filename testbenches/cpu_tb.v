@@ -3,28 +3,25 @@ module cpu_tb;
     reg clk = 0;
     reg reset = 1;
 
-    // Instantiate the DUT (Device Under Test)
+    parameter CLK_PERIOD = 4;
+
     top cpu (
         .clk(clk),
         .reset(reset)
     );
 
-    // Clock generation
-    always #2 clk = ~clk;
+    always #(CLK_PERIOD/2) clk = ~clk;
 
     initial begin
         $dumpfile("cpu_tb.vcd");
-        $dumpvars(0, cpu_tb);
+        $dumpvars(0, cpu);
 
-        // Reset pulse sequence
-        #30;
+        #(CLK_PERIOD*5);
         reset = 0;
-        #500;
-        reset = 1;
-        #500;
-        reset = 0;
-        #500;
+
+        #(CLK_PERIOD*2000);
         $finish;
     end
 
 endmodule
+
