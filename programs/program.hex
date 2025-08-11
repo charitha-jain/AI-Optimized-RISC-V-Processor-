@@ -1,9 +1,10 @@
 00500093  // addi x1, x0, 5
 00a00113  // addi x2, x0, 10
-002081b3  // add x3,x1,x2 → 15
-0031812b  // dot_result x3 = dot(x3,x2)
-004181ab  // matmul (x3,x3) long op
-0051C24b  // relu(x3) → x4
-0061D26b  // sigmoid(x3) → x5
-0071E28b  // step(x3) → x6
-00000063  // infinite loop (beq x0,x0,0)
+002081b3  // add  x3, x1, x2
+002180b3  // dot      x1, x3, x2   (AI funct3=000, opcode=0x0B)
+00218133  // matmul   x2, x3, x2   (AI funct3=001)
+002182b3  // relu     x5, x3, x2   (AI funct3=010)
+00218333  // sigmoid  x6, x3, x2   (AI funct3=011)
+002184b3  // step     x9, x3, x2   (AI funct3=100)
+00000063  // beq x0, x0, 0
+

@@ -1,0 +1,21 @@
+rc file Version 1.0
+
+[Design]
+COMPILE_PATH=/home/1CD22EC036/AI-Optimized-RISC-V-Processor-/programs
+VCS_HOME=/home/install/synopsys/vcs/U-2023.03
+VERDI_HOME=
+SystemC=FALSE
+UUM=FALSE
+KDB=FALSE
+USE_NOVAS_HOME=FALSE
+COSIM=FALSE
+TOP=alu_control branch_unit forwarding_unit ai_result_mux ai_test_vectors cpu_tb 
+OPTION=-ssz -ssv -ssy 
+ELAB_OPTION=-ssz -ssv -ssy 
+
+[Value]
+WREALX=ffff534e50535f58
+WREALZ=ffff534e50535f5a
+
+[CompInfo]
+FLOW_OPTS=-ssz -ssv -ssy 
