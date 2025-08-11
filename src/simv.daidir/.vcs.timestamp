@@ -1,0 +1,174 @@
+0
+31
++itf+/home/install/synopsys/vcs/U-2023.03/linux64/lib/vcsdp.tab
++memcbk
++vcsd
++vpi
+-Mamsrun=
+-Masflags=
+-Mcc=gcc
+-Mcfl= -pipe -fPIC -O -I/home/install/synopsys/vcs/U-2023.03/include
+-Mcplusplus=g++
+-Mcrt0=
+-Mcrtn=
+-Mcsrc=
+-Mexternalobj=
+-Mldflags= -rdynamic
+-Mobjects= /home/install/synopsys/vcs/U-2023.03/linux64/lib/libvirsim.so /home/install/synopsys/vcs/U-2023.03/linux64/lib/liberrorinf.so /home/install/synopsys/vcs/U-2023.03/linux64/lib/libsnpsmalloc.so /home/install/synopsys/vcs/U-2023.03/linux64/lib/libvfs.so
+-Mout=simv
+-Msaverestoreobj=/home/install/synopsys/vcs/U-2023.03/linux64/lib/vcs_save_restore_new.o
+-Msyslibs=-ldl
+-Mvcsaceobjs=
+-Mxcflags= -pipe -fPIC -I/home/install/synopsys/vcs/U-2023.03/include
+-Mxllcflags=
+-debug_access+all+bc
+-debug_region+cell
+-f ../scripts/filelist_sim.f
+-full64
+-gen_obj
+-l
+-picarchive
+/home/install/synopsys/vcs/U-2023.03/linux64/bin/vcs1
+compile.log
+../scripts/filelist_sim.f
+102
+dig_45nm=/home/install/cadence/FOUNDRY/digital/45nm
+customcompiler_HOME=/home/install/synopsys/customcompiler/U-2023.03-3
+XDG_SESSION_ID=621
+XDG_RUNTIME_DIR=/run/user/1029
+XDG_DATA_DIRS=/home/1CD22EC036/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+XCELIUMHOME=/home/install/cadence/XCELIUM2009
+XA_HOME=/home/install/synopsys/xa/T-2022.06
+WV_HOME=/home/install/synopsys/wv/U-2023.03-SP1-2
+VMR_MODE_FLAG=64
+VMANAGERHOME=/home/install/cadence/VMANAGER2009
+VENDOR=unknown
+VCS_PATHMAP_PRELOAD_DONE=1
+VCS_MX_HOME_INTERNAL=1
+VCS_MODE_FLAG=64
+VCS_LOG_FILE=compile.log
+VCS_HOME=/home/install/synopsys/vcs/U-2023.03
+VCS_EXEC_DONE=1
+VCS_DEPTH=0
+VCS_ARG_ADDED_FOR_TMP=1
+VCS_ARCH=linux64
+UNAME=/bin/uname
+ULTRASIMHOME=/home/install/cadence/ULTRASIM181
+TOOL_HOME=/home/install/synopsys/vcs/U-2023.03/linux64
+TAURUS_HOME=/home/install/synopsys/taurus_tsuprem4/U_2022.12
+SYN_HOME=/home/install/synopsys/syn/T-2022.03-SP5
+SYNOPSYS_HOME=/home/install/synopsys
+STRATUSHOME=/home/install/cadence/STRATUS202
+STDCELL=/home/install/cadence/FOUNDRY/stdcell
+STARRC_HOME=/home/install/synopsys/starrc/U-2022.12-SP3
+SSVHOME=/home/install/cadence/SSV202
+SSH_TTY=/dev/pts/0
+SSH_CONNECTION=10.10.11.156 55720 172.25.0.102 22
+SSH_CLIENT=10.10.11.156 55720 22
+SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
+SPBHOME=/home/install/cadence/SPB174
+SNPS_VCS_CLANG_PATH=/home/install/synopsys/vcs/U-2023.03/linux64/clang
+SNPS_INTERNAL_VCS_LINUX_OS=linux
+SIGRITYHOME=/home/install/cadence/SIGRITY20211
+SENTAURUS_HOME=/home/install/synopsys/sentaurus/T-2022.03-SP2
+SELINUX_USE_CURRENT_RANGE=
+SELINUX_ROLE_REQUESTED=
+SELINUX_LEVEL_REQUESTED=
+SCRNAME=vcs
+SCRIPT_NAME=vcs
+REMOTEHOST=10.10.11.156
+QT_PLUGIN_PATH=/usr/lib64/kde4/plugins:/usr/lib/kde4/plugins
+QT_GRAPHICSSYSTEM_CHECKED=1
+QTLIB=/usr/lib64/qt-3.3/lib
+QTINC=/usr/lib64/qt-3.3/include
+QTDIR=/usr/lib64/qt-3.3
+QRC_HOME=/home/install/cadence/QUANTUS211
+QRC_ENABLE_QRCRACTION=1
+PVSHOME=/home/install/cadence/PVS201
+PRIME_HOME=/home/install/synopsys/prime/U-2022.12-SP3
+PRIMEWAVE_HOME=/home/install/synopsys/primewave/U-2023.03-3
+PRIMEWAVER_HOME=/home/install/synopsys/primewavereliability/U-2023.03
+PRIMESIM_HOME=/home/install/synopsys/primesim/U-2023.03
+OVA_UUM=0
+OSTYPE=linux
+NT_HOME=/home/install/synopsys/nt/U-2022.12-SP3
+MVSHOME=/home/install/cadence/MVS202
+MODUSHOME=/home/install/cadence/MODUS201
+MODULESHOME=/usr/share/Modules
+MODULEPATH=/usr/share/Modules/modulefiles:/etc/modulefiles
+MMSIMHOME=/home/install/cadence/SPECTRE201
+LOADEDMODULES=
+LIBRARYCOMPILER_HOME=/home/install/synopsys/lc/U-2022.12-SP5
+LIBERATEHOME=/home/install/cadence/LIBERATE201
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+LECHOME=/home/install/cadence/CONFRML202
+LC_ALL=C
+KDEDIRS=/usr
+JLSHOME=/home/install/cadence/JLS201
+JASPERHOME=/home/install/cadence/JASPER1909
+IUSHOME=/home/install/cadence/INCISIVE152
+INTEGRANDHOME=/home/install/cadence/INTEGRAND60
+INNOVUSHOME=/home/install/cadence/INNOVUS201
+ICVALIDATOR=/home/install/synopsys/icvalidator/U-2022.12-SP2
+ICC2_HOME=/home/install/synopsys/icc2/U-2022.12-SP3
+HSPICE_HOME=/home/install/synopsys/hspice/U-2023.03/hspice
+HSIMPLUS_HOME=/home/install/synopsys/hsim/U-2023.03/hsimplus
+HOSTTYPE=x86_64-linux
+HISTCONTROL=ignoredups
+GROUP=1CD22EC036
+GENUSHOME=/home/install/cadence/GENUS201
+FOUNDRY=/home/install/cadence/FOUNDRY
+FINFET=/home/install/cadence/FOUNDRY/cds_ff_mpt_v_1.0
+FINESIM_HOME=/home/install/synopsys/finesim/U-2023.03
+EMBEDIT_HOME=/home/install/synopsys/embedit/U-2023.03-SP1
+DIGITAL=/home/install/cadence/FOUNDRY/digital
+CUSTOMINFRA_HOME=/home/install/synopsys/custominfrastructure/U-2023.03
+CORETOOLS_HOME=/home/install/synopsys/coretools/U-2022.12
+CDS_Netlisting_Mode=Analog
+CDS_LIC_FILE=5280@14.139.1.126
+CDS_INST_DIR=/home/install/cadence/IC618
+CDS_AUTO_64BIT=ALL
+CDS_AHDLCMI_ENABLE=YES
+CDSHOME=/home/install/cadence/IC618
+BASH_FUNC_module()=() {  eval `/usr/bin/modulecmd bash $*`_}
+ASSURAHOME=/home/install/cadence/ASSURA41
+ANALOG=/home/install/cadence/FOUNDRY/analog
+AMSHOME=/home/install/cadence/INCISIVE152
+0
+0
+28
+1754635476 ../testbenches/cpu_tb.v
+1754819109 ../src/top.v
+1754635476 ../src/ai_test_vectors.v
+1754819081 ../src/ai_result_mux.v
+1754635476 ../src/ai_unit_controller.v
+1754820892 ../src/sigmoid_unit.v
+1754820907 ../src/relu_unit.v
+1754820921 ../src/step_function.v
+1754819059 ../src/dot_product.v
+1754819858 ../src/matrix_multiplier.v
+1754635476 ../src/ai_instruction_decoder.v
+1754819010 ../src/pipeline_register_mem_wb.v
+1754818990 ../src/pipeline_register_ex_mem.v
+1754818965 ../src/pipeline_register_id_ex.v
+1754635476 ../src/pipeline_register_if_id.v
+1754635476 ../src/forwarding_unit.v
+1754635476 ../src/hazard_unit.v
+1754635476 ../src/branch_unit.v
+1754635476 ../src/alu_control.v
+1754819671 ../src/alu.v
+1754635476 ../src/control_unit.v
+1754635476 ../src/immediate_generator.v
+1754818942 ../src/register_file.v
+1754819605 ../src/data_memory.v
+1754635476 ../src/imem.v
+1754635476 ../src/pc.v
+1754808614 ../scripts/filelist_sim.f
+1677384340 /home/install/synopsys/vcs/U-2023.03/linux64/lib/vcsdp.tab
+4
+1677385575 /home/install/synopsys/vcs/U-2023.03/linux64/lib/libvirsim.so
+1677385060 /home/install/synopsys/vcs/U-2023.03/linux64/lib/liberrorinf.so
+1677385018 /home/install/synopsys/vcs/U-2023.03/linux64/lib/libsnpsmalloc.so
+1677385055 /home/install/synopsys/vcs/U-2023.03/linux64/lib/libvfs.so
+1754820976 simv.daidir
+-1 partitionlib

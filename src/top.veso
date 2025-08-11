@@ -7,9 +7,9 @@ module top (
     pc pc0(.clk(clk), .reset(reset), .pc_out(pc_if));
     imem imem0(.pc(pc_if), .instruction(inst_if));
 
-    // ============ IF/ID ============
+    // ============ IF/ID Pipeline ============
     wire [31:0] pc_id, inst_id;
-    wire stall;
+    wire stall; // Single declaration here
     pipeline_register_if_id u_ifid(
         .clk(clk), .reset(reset), .stall(stall),
         .pc_in(pc_if), .instruction_in(inst_if),
@@ -23,15 +23,14 @@ module top (
     wire [6:0] op_id  = inst_id[6:0];
     wire [2:0] funct3_id = inst_id[14:12];
 
-    wire [127:0] read1_id, read2_id;
-    wire [31:0] imm_id;
+    wire [31:0] read1_id, read2_id, imm_id;
     wire [3:0] alu_op_id;
     wire regwrite_id, is_ai_id;
     wire [2:0] ai_opcode_id;
 
-    wire [4:0] rd_wb;
-    wire [127:0] writeback_data; // now 128-bit
-    wire regwrite_wb;
+    wire [4:0] rd_wb;         // Fixed width
+    wire [31:0] writeback_data; // Fixed width
+    wire regwrite_wb;         // Already correct
 
     register_file regs(
         .clk(clk), .reset(reset),
@@ -49,9 +48,8 @@ module top (
         .ai_opcode(ai_opcode_id)
     );
 
-    // ============ ID/EX ============
-    wire [31:0] pc_ex, imm_ex;
-    wire [127:0] read1_ex, read2_ex;
+    // ============ ID/EX Pipeline ============
+    wire [31:0] pc_ex, read1_ex, read2_ex, imm_ex;
     wire [4:0] rs1_ex, rs2_ex, rd_ex;
     wire [3:0] alu_op_ex;
     wire regwrite_ex, is_ai_ex;
@@ -74,95 +72,82 @@ module top (
     );
 
     // ============ EX Stage ============
-    // ALU scalar result (32b) placed into low 32b of the 128b result path
-    wire [31:0] alu_out_low32, dot_ex, relu_ex, sigmoid_ex, step_ex;
-    wire [127:0] alu_out_ex128;
+    wire [31:0] alu_out_ex, dot_ex, relu_ex, sigmoid_ex, step_ex;
     wire ai_start = is_ai_ex && (ai_opcode_ex == 3'b001);
     wire ai_busy, ai_done;
-    reg [127:0] sel_ai_ex128;
+    reg [31:0] sel_ai_ex;
 
-    // scalar ALU operates on low 32 bits (typical scalar ops)
     alu alu0(
-        .input_a(read1_ex[31:0]), .input_b(imm_ex), .alu_op(alu_op_ex),
-        .alu_result(alu_out_low32), .zero()
+        .input_a(read1_ex), .input_b(imm_ex), .alu_op(alu_op_ex),
+        .alu_result(alu_out_ex), .zero()
     );
 
-    // pack scalar alu result into 128-bit vector (low 32b valid)
-    assign alu_out_ex128 = {96'b0, alu_out_low32};
-
-    // dot_product operates on full 128-bit vectors and returns 32-bit scalar
     dot_product dot0(
         .vec_a(read1_ex), .vec_b(read2_ex),
         .dot_result(dot_ex)
     );
 
-    relu_unit relu0(.in_data(read1_ex[31:0]), .out_data(relu_ex));
-    sigmoid_unit sig0(.in_data(read1_ex[31:0]), .out_data(sigmoid_ex));
-    step_function step0(.in_data(read1_ex[31:0]), .out_data(step_ex));
+    relu_unit relu0(.in_data(read1_ex), .out_data(relu_ex));
+    sigmoid_unit sig0(.in_data(read1_ex), .out_data(sigmoid_ex));
+    step_function step0(.in_data(read1_ex), .out_data(step_ex));
 
-    // matrix_multiplier expects 256-bit matrices; use read1_ex/read2_ex in low half
     matrix_multiplier mm0(
         .clk(clk), .start(ai_start),
-        .matrix_a({128'b0, read1_ex}), .matrix_b({128'b0, read2_ex}),
-        .done(ai_done), .result() // result handled internally, we read lower 128 bits later if needed
+        .matrix_a({224'b0, read1_ex}), .matrix_b({224'b0, read2_ex}),
+        .done(ai_done), .result()
     );
-
     ai_unit_controller fsm(.clk(clk), .start(ai_start), .busy(ai_busy), .done(ai_done));
 
-    // Select AI result into 128-bit container (AI ops yield 32-bit results => place into low 32)
     always @(*) begin
         case (ai_opcode_ex)
-            3'b000: sel_ai_ex128 = {96'b0, dot_ex};      // dot -> low32
-            3'b001: sel_ai_ex128 = 128'b0;               // matrix mul placeholder (if mm produces 128b, put it here)
-            3'b010: sel_ai_ex128 = {96'b0, relu_ex};
-            3'b011: sel_ai_ex128 = {96'b0, sigmoid_ex};
-            3'b100: sel_ai_ex128 = {96'b0, step_ex};
-            default: sel_ai_ex128 = 128'b0;
+            3'b000: sel_ai_ex = dot_ex;
+            3'b001: sel_ai_ex = 32'b0; // Placeholder for matrix
+            3'b010: sel_ai_ex = relu_ex;
+            3'b011: sel_ai_ex = sigmoid_ex;
+            3'b100: sel_ai_ex = step_ex;
+            default: sel_ai_ex = 32'b0;
         endcase
     end
 
-    wire [127:0] final_ex128 = is_ai_ex ? sel_ai_ex128 : alu_out_ex128;
+    wire [31:0] final_ex = is_ai_ex ? sel_ai_ex : alu_out_ex;
 
-    // ============ EX/MEM ============
-    wire [127:0] alu_ex_mem128;
+    // ============ EX/MEM Pipeline ============
+    wire [31:0] alu_ex_mem;
     wire [4:0] rd_mem;
     wire regwrite_mem;
 
     pipeline_register_ex_mem u_exmem(
         .clk(clk), .reset(reset),
-        .alu_result_in(final_ex128), .rd_in(rd_ex),
+        .alu_result_in(final_ex), .rd_in(rd_ex),
         .regwrite_in(regwrite_ex && (!ai_busy || ai_done)),
-        .alu_result_out(alu_ex_mem128), .rd_out(rd_mem),
+        .alu_result_out(alu_ex_mem), .rd_out(rd_mem),
         .regwrite_out(regwrite_mem)
     );
 
     // ============ MEM Stage ============
-    wire [31:0] mem_data32;
+    wire [31:0] mem_data;
     data_memory dmem(
         .clk(clk),
-        .address(alu_ex_mem128[31:0]),
-        .write_data(read2_ex[31:0]),
+        .address(alu_ex_mem),
+        .write_data(read2_ex),
         .mem_write(op_ex == 7'b0100011),
-        .read_data(mem_data32)
+        .read_data(mem_data)
     );
 
-    // Pack memory read (32b) into 128b (low 32 valid)
-    wire [127:0] mem_data128 = {96'b0, mem_data32};
-
-    // ============ MEM/WB ============
-    wire [127:0] alu_mem_wb128, mem_wb_data128;
+    // ============ MEM/WB Pipeline ============
+    wire [31:0] alu_mem_wb, mem_wb_data;
 
     pipeline_register_mem_wb u_memwb(
         .clk(clk), .reset(reset),
-        .dm_in(mem_data128), .alu_in(alu_ex_mem128),
+        .dm_in(mem_data), .alu_in(alu_ex_mem),
         .rd_in(rd_mem), .regwrite_in(regwrite_mem),
-        .dm_out(mem_wb_data128), .alu_out(alu_mem_wb128),
+        .dm_out(mem_wb_data), .alu_out(alu_mem_wb),
         .rd_out(rd_wb), .regwrite_out(regwrite_wb)
     );
 
     // ============ WB Stage ============
     wire is_load = (op_ex == 7'b0000011);
-    assign writeback_data = is_load ? mem_wb_data128 : alu_mem_wb128;
+    assign writeback_data = is_load ? mem_wb_data : alu_mem_wb;
 
     // ============ Hazard Logic ============
     wire stall_ai = ai_busy && !ai_done;

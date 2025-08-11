@@ -1,10 +1,10 @@
 module pipeline_register_ex_mem (
     input clk, reset,
-    input [31:0] alu_result_in,
+    input [127:0] alu_result_in,
     input [4:0] rd_in,
     input regwrite_in,
 
-    output reg [31:0] alu_result_out,
+    output reg [127:0] alu_result_out,
     output reg [4:0] rd_out,
     output reg regwrite_out
 );
@@ -20,3 +20,4 @@ module pipeline_register_ex_mem (
     end
 
 endmodule
+

@@ -1,0 +1,44 @@
+{
+    "alu_control": [
+        "alu_control",
+        "KJuSB",
+        "module",
+        1
+    ],
+    "branch_unit": [
+        "branch_unit",
+        "AjFIE",
+        "module",
+        2
+    ],
+    "forwarding_unit": [
+        "forwarding_unit",
+        "T1CvT",
+        "module",
+        3
+    ],
+    "ai_result_mux": [
+        "ai_result_mux",
+        "M5kIZ",
+        "module",
+        4
+    ],
+    "ai_test_vectors": [
+        "ai_test_vectors",
+        "qGHAJ",
+        "module",
+        5
+    ],
+    "cpu_tb": [
+        "cpu_tb",
+        "mvuYT",
+        "module",
+        6
+    ],
+    "...MASTER...": [
+        "SIM",
+        "amcQw",
+        "module",
+        7
+    ]
+}
