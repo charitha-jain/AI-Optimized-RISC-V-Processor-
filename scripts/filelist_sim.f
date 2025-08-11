@@ -1,5 +1,6 @@
 +incdir+../src
 +incdir+../testbenches
++define+PROGRAM_HEX=\"../programs/program.hex\"
 
 # RTL files
 ../src/pc.v
