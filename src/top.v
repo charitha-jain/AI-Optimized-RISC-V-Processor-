@@ -133,8 +133,8 @@ module top (
     step_function step0(.in_data(read1_ex), .step_result(step_result));
 
     matrix_multiplier mm0(
-        .clk(clk), .start(ai_start),
-        .a(read1_ex), .b(read2_ex),
+        .clk(clk),.reset(reset), .start(ai_start),
+        .matrix_a(read1_ex), .matrix_b(read2_ex),
         .done(ai_done), .result(mat_res_ex)
     );
     ai_unit_controller fsm(.clk(clk), .start(ai_start), .busy(ai_busy), .done(ai_done));
@@ -179,7 +179,6 @@ module top (
     wire [31:0] alu_mem_wb;
     wire [31:0] mem_wb_data;
     wire [6:0] op_wb;
-    wire regwrite_wb;
 
     pipeline_register_mem_wb u_memwb(
         .clk(clk), .reset(reset),
