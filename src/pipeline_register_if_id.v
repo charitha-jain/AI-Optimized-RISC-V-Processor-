@@ -7,6 +7,7 @@ module pipeline_register_if_id(
     output reg [31:0] pc_out,
     output reg [31:0] instruction_out
 );
+
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             pc_out <= 32'b0;
@@ -15,6 +16,7 @@ module pipeline_register_if_id(
             pc_out <= pc_in;
             instruction_out <= instruction_in;
         end
-        // If stall is active, hold previous values (no update)
     end
+
 endmodule
+
