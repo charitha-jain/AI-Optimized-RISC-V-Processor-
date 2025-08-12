@@ -78,7 +78,23 @@ module top (
     reg [31:0] sel_ai_ex;
     wire zero_ex;
 
-    alu alu0(.input_a(read1_ex), .input_b(imm_ex), .alu_op(alu_op_ex), .alu_result(alu_out_ex), .zero(zero_ex));
+    // forwarding signals
+    wire [1:0] forward_a, forward_b;
+    wire [31:0] forward_a_data, forward_b_data;
+    wire [31:0] alu_input_a, alu_input_b;
+    // determine if current EX uses immediate in operand B (I-type, loads use imm - adjust as needed)
+    wire use_imm_ex = (op_ex == 7'b0010011) || (op_ex == 7'b0000011) || (op_ex == 7'b0010111) || (op_ex == 7'b0110111);
+
+    // forwarding muxes
+    assign forward_a_data = (forward_a == 2'b01) ? alu_ex_mem :
+                            (forward_a == 2'b10) ? writeback_data : read1_ex;
+    assign forward_b_data = (forward_b == 2'b01) ? alu_ex_mem :
+                            (forward_b == 2'b10) ? writeback_data : read2_ex;
+
+    assign alu_input_a = forward_a_data;
+    assign alu_input_b = use_imm_ex ? imm_ex : forward_b_data;
+
+    alu alu0(.input_a(alu_input_a), .input_b(alu_input_b), .alu_op(alu_op_ex), .alu_result(alu_out_ex), .zero(zero_ex));
     dot_product dot0(.vec_a(read1_ex), .vec_b(read2_ex), .dot_result(dot_ex));
     relu_unit relu0(.in_data(read1_ex), .out_data(relu_ex));
     sigmoid_unit sig0(.in_data(read1_ex), .out_data(sigmoid_ex));
@@ -126,7 +142,7 @@ module top (
     data_memory dmem(
         .clk(clk),
         .address(alu_ex_mem),
-        .write_data(read2_ex),
+        .write_data(forward_b_data), // write data should also consider forwarding
         .mem_write(op_mem == 7'b0100011),
         .mem_read(mem_read_mem),
         .read_data(mem_data)
@@ -152,7 +168,6 @@ module top (
     // ============ Hazard & Forwarding ============
     wire stall_ai = ai_busy && !ai_done;
     wire stall_hazard;
-    wire [1:0] forward_a, forward_b;
 
     hazard_unit hz_inst(
         .rs1_id(rs1_id),
